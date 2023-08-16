@@ -196,7 +196,7 @@ void EMailSender::setIsSecure(bool isSecure) {
 
 #ifdef SSLCLIENT_WRAPPER
 EMailSender::Response EMailSender::awaitSMTPResponse(SSLClient &client,
-		const char* resp, const char* respDesc, uint16_t timeOut, EMAIL_SENDER_SSL_CLIENT_DEBUG) {
+		const char* resp, const char* respDesc, uint16_t timeOut) {
 	EMailSender::Response response;
 	uint32_t ts = millis();
 	while (!client.available()) {
@@ -447,7 +447,7 @@ EMailSender::Response EMailSender::send(const char* to[], byte sizeOfTo,  byte s
 	// Initialize the SSL client library
 	// We input an EthernetClient, our trust anchors, and the analog pin
 	EMAIL_NETWORK_CLASS base_client;
-	SSLClient client(base_client, TAs, (size_t)TAs_NUM, ANALOG_PIN, 2, EMAIL_SENDER_SSL_CLIENT_DEBUG);
+	SSLClient client(base_client, TAs, (size_t)TAs_NUM, ANALOG_PIN, 2);
 #else
 	#error "You must put outside scope the client declaration if you want use SSLClient!"
 #endif
