@@ -734,12 +734,20 @@ EMailSender::Response EMailSender::send(const char* to[], byte sizeOfTo,  byte s
 //  client.println(F("Mime-Version: 1.0"));
 
   client.println(F("MIME-Version: 1.0"));
-  client.println(F("Content-Type: Multipart/mixed; boundary=frontier"));
+  DEBUG_PRINT(F("--> "));
+  DEBUG_PRINTLN(F("Content-Type: multipart/mixed; boundary=frontier"));
+  client.println(F("Content-Type: multipart/mixed; boundary=frontier"));
 
+  DEBUG_PRINT(F("--> "));
+  DEBUG_PRINTLN(F("--frontier"));
   client.println(F("--frontier"));
 
+    DEBUG_PRINT(F("--> "));
+    DEBUG_PRINT(F("Content-Type: "));
     client.print(F("Content-Type: "));
+	DEBUG_PRINT(email.mime);
     client.print(email.mime);
+	DEBUG_PRINT(F("; charset=\"UTF-8\""));
     client.println(F("; charset=\"UTF-8\""));
 //  client.println(F("Content-Type: text/html; charset=\"UTF-8\""));
   client.println(F("Content-Transfer-Encoding: 7bit"));
@@ -983,7 +991,11 @@ EMailSender::Response EMailSender::send(const char* to[], byte sizeOfTo,  byte s
 #endif
 
 	  } // Close attachment cycle
+	  
+	  DEBUG_PRINTLN(F("-->"));
 	  client.println();
+	  DEBUG_PRINT(F("--> "))
+	  DEBUG_PRINTLN(F("--frontier--"));
 	  client.println(F("--frontier--"));
 #ifdef STORAGE_EXTERNAL_ENABLED
 	  #ifdef OPEN_CLOSE_SD
